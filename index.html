@@ -15,14 +15,13 @@
 <body>
 	<div id="app" :key="exg">
 		<div id="exchange">
+			<div class="header">
+				<h1>Currency Converter</h1>
+			</div>
 			<div class="container">
-				<div class="row" id="header">
-					<h1>Currency Converter</h1>
-					<h5>Alicia Grevsten</h5>
-				</div>
 				<div class="row">
 					<div class="col left">
-						<h3>Currency: {{ exg }}</h3>
+						<h3>Currency: <strong id="cur">{{ exg }}</strong></h3>
 						<div v-for="(rate, currency) in currencies">
 							<ul>
 								<li><a id="currency" @click="changeCurrency(currency)">{{currency}}:</a> {{rate}}</li>
@@ -61,12 +60,12 @@
 							</div>
 						</div>
 
-						<div class="row" id="test">
+						<!-- <div class="row" id="test">
 							<p>From: {{ selectedFromCurrency }}</p>
 							<p>To: {{ selectedToCurrency }}</p>
 							<p>Rate: {{ rate }}</p>
 							<p>Output: {{ outputAmount }}</p>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
