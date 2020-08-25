@@ -5,7 +5,9 @@
 	<meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0">
 	<title>Exchange Tool</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+	<link href="https://fonts.googleapis.com/css2?family=Lexend+Peta&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@800&display=swap" rel="stylesheet">	<link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
 		integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 </head>
@@ -20,7 +22,7 @@
 				</div>
 				<div class="row">
 					<div class="col left">
-						<h3> Currency: {{ exg }}</h3>
+						<h3>Currency: {{ exg }}</h3>
 						<div v-for="(rate, currency) in currencies">
 							<ul>
 								<li><a id="currency" @click="changeCurrency(currency)">{{currency}}:</a> {{rate}}</li>
@@ -35,7 +37,7 @@
 							<div class="col colone">
 								<div class="form-group">
 									<select class="custom-select" v-model="selectedFromCurrency" v-model="selectedToCurrency" v-on:change="calculateExhange(inputAmount)">
-										<option v-for="(rate, fromCurrency) in currencies">{{fromCurrency}}</option>
+										<option v-for="(rate, currency) in currencies">{{currency}}</option>
 									</select>
 								</div>
 							</div>
@@ -45,7 +47,7 @@
 							<div class="col colthree">
 								<div class="form-group">
 									<select class="custom-select" v-model="selectedToCurrency" v-on:change="calculateExhange(inputAmount)">
-										<option v-for="(rate, toCurrency) in currencies">{{toCurrency}}</option>
+										<option v-for="(rate, currency) in currencies">{{currency}}</option>
 									</select>
 								</div>
 							</div>
@@ -55,7 +57,7 @@
 								<input type="text" v-on:input="calculateExhange(inputAmount)" v-model="inputAmount">
 							</div>
 							<div class="col second">
-								<input type="text" disabled v-model="outputAmount">
+								<input type="text" id="dis" disabled v-model="outputAmount">
 							</div>
 						</div>
 
