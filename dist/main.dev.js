@@ -5,12 +5,12 @@ var app = new Vue({
   data: {
     data: null,
     exg: "SEK",
-    selectedFromCurrency: "SEK",
-    selectedToCurrency: "USD",
-    inputAmount: 500,
-    outputAmount: 0,
+    selectedFromCurrency: "",
+    selectedToCurrency: "",
+    inputAmount: "",
+    outputAmount: "",
     currencies: [],
-    rate: []
+    rate: ""
   },
   created: function created() {
     var _this = this;
@@ -36,18 +36,21 @@ var app = new Vue({
         return console.log(err);
       });
     },
-    calculateExhange: function calculateExhange(input, from, to) {
-      console.log(from);
-      console.log(to);
-      console.log("https://api.exchangeratesapi.io/latest?base=".concat(from, "&symbols=").concat(to));
-      console.log(input);
+    calculateExhange: function calculateExhange(input) {
+      var _this3 = this;
+
       axios.get("https://api.exchangeratesapi.io/latest?base=".concat(this.selectedFromCurrency, "&symbols=").concat(this.selectedToCurrency)).then(function (res) {
-        return console.log(res.data);
+        return _this3.rate = res.data.rates[_this3.selectedToCurrency];
       })["catch"](function (err) {
         return console.log(err);
       });
-      console.log(this.rate); //console.log(input * this.rate;
-      //this.outputAmount  = input * 0.5;		
+      this.outputAmount = input * this.rate;
+    },
+    // NOT DONE!
+    switchCurrencies: function switchCurrencies() {
+      var temp = this.selectedFromCurrency;
+      this.selectedFromCurrency = this.selectedToCurrency;
+      this.selectedToCurrency = temp;
     }
   }
 });

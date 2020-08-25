@@ -3,13 +3,13 @@ let app = new Vue({
   data: {
     data: null,
     exg: "SEK",
-    selectedFromCurrency: "SEK",
-    selectedToCurrency: "USD",
-    inputAmount: 500,
-    outputAmount: 0,
+    selectedFromCurrency: "",
+    selectedToCurrency: "",
+    inputAmount: "",
+    outputAmount: "",
 
     currencies: [],
-    rate: [],
+    rate: "",
   },
   created() {
     axios
@@ -31,22 +31,20 @@ let app = new Vue({
 		.then((res) => (this.currencies = res.data.rates))
 		.catch((err) => console.log(err));
 	},
-	calculateExhange(input, from, to) {
-		console.log(from);
-		console.log(to);
-		console.log(`https://api.exchangeratesapi.io/latest?base=${from}&symbols=${to}`);
-		console.log(input);
-
+	calculateExhange(input) {
 		axios
 		.get(`https://api.exchangeratesapi.io/latest?base=${this.selectedFromCurrency}&symbols=${this.selectedToCurrency}`)
-		.then((res) => (console.log(res.data)))
+		.then((res) => (this.rate = res.data.rates[this.selectedToCurrency]))
 		.catch((err) => console.log(err));
+		
+		this.outputAmount  = input * this.rate;		
+	},
+	// NOT DONE!
+	switchCurrencies() {
+		let temp = this.selectedFromCurrency;
 
-		console.log(this.rate);
-		
-		
-		//console.log(input * this.rate;
-		//this.outputAmount  = input * 0.5;		
+		this.selectedFromCurrency = this.selectedToCurrency;
+		this.selectedToCurrency = temp;
 	}
   },
 });

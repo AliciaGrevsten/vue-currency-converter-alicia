@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0">
 	<title>Exchange Tool</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+		integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 </head>
+
 <body>
 	<div id="app" :key="exg">
 		<div id="exchange">
@@ -31,31 +34,36 @@
 						<div class="row">
 							<div class="col colone">
 								<div class="form-group">
-									<select class="custom-select">
-										<option selected="">{{ selectedFromCurrency }}</option>
-									  <option v-for="(rate, currency) in currencies">{{currency}}</option>
+									<select class="custom-select" v-model="selectedFromCurrency" v-model="selectedToCurrency" v-on:change="calculateExhange(inputAmount)">
+										<option v-for="(rate, fromCurrency) in currencies">{{fromCurrency}}</option>
 									</select>
-								  </div>
+								</div>
 							</div>
 							<div class="col coltwo">
-								<button><--></button>
+								<button v-on:click="switchCurrencies">⇄</button>
 							</div>
 							<div class="col colthree">
 								<div class="form-group">
-									<select class="custom-select">
-										<option selected="">{{ selectedToCurrency }}</option>
-										<option v-for="(rate, currency) in currencies">{{currency}}</option>
-									  </select>
-								  </div>
+									<select class="custom-select" v-model="selectedToCurrency" v-on:change="calculateExhange(inputAmount)">
+										<option v-for="(rate, toCurrency) in currencies">{{toCurrency}}</option>
+									</select>
+								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col first">
-								<input type="text" v-on:keyup="calculateExhange(inputAmount, selectedFromCurrency, selectedToCurrency)" v-model="inputAmount">
+								<input type="text" v-on:input="calculateExhange(inputAmount)" v-model="inputAmount">
 							</div>
 							<div class="col second">
-								<input type="text" v-model="outputAmount">
+								<input type="text" disabled v-model="outputAmount">
 							</div>
+						</div>
+
+						<div class="row" id="test">
+							<p>From: {{ selectedFromCurrency }}</p>
+							<p>To: {{ selectedToCurrency }}</p>
+							<p>Rate: {{ rate }}</p>
+							<p>Output: {{ outputAmount }}</p>
 						</div>
 					</div>
 				</div>
@@ -67,4 +75,5 @@
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="main.js"></script>
 </body>
+
 </html>
