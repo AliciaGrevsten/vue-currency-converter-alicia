@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0">
+	<title>Exchange Tool</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+</head>
+<body>
+	<div id="app" :key="exg">
+		<div id="exchange">
+			<div class="container">
+				<div class="row" id="header">
+					<h1>Currency Converter</h1>
+					<h5>Alicia Grevsten</h5>
+				</div>
+				<div class="row">
+					<div class="col left">
+						<h3> Currency: {{ exg }}</h3>
+						<div v-for="(rate, currency) in currencies">
+							<ul>
+								<li><a id="currency" @click="changeCurrency(currency)">{{currency}}:</a> {{rate}}</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col right">
+						<div class="row">
+							<h3> Exhange Calculator</h3>
+						</div>
+						<div class="row">
+							<div class="col colone">
+								<div class="form-group">
+									<select class="custom-select">
+										<option selected="">{{ selectedFromCurrency }}</option>
+									  <option v-for="(rate, currency) in currencies">{{currency}}</option>
+									</select>
+								  </div>
+							</div>
+							<div class="col coltwo">
+								<button><--></button>
+							</div>
+							<div class="col colthree">
+								<div class="form-group">
+									<select class="custom-select">
+										<option selected="">{{ selectedToCurrency }}</option>
+										<option v-for="(rate, currency) in currencies">{{currency}}</option>
+									  </select>
+								  </div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col first">
+								<input type="text" v-on:keyup="calculateExhange(inputAmount, selectedFromCurrency, selectedToCurrency)" v-model="inputAmount">
+							</div>
+							<div class="col second">
+								<input type="text" v-model="outputAmount">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="main.js"></script>
+</body>
+</html>
