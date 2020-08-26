@@ -54,6 +54,7 @@
 							</div>
 						</div>
 						<div class="row">
+							<!-- Input/Output -->
 							<div class="col first">
 								<input type="text" v-on:input="calculateExhange(inputAmount, selectedFromCurrency, selectedToCurrency)" v-model="inputAmount">
 							</div>
@@ -61,14 +62,6 @@
 								<input type="text" id="dis" disabled v-model="outputAmount">
 							</div>
 						</div>
-
-<!-- 						<div class="row" id="test">
-							<p>From: {{ selectedFromCurrency }}</p>
-							<p>To: {{ selectedToCurrency }}</p>
-							<p>Rate: {{ rate }}</p>
-							<p>Output: {{ outputAmount }}</p>
-						</div> -->
-
 					</div>
 				</div>
 			</div>
