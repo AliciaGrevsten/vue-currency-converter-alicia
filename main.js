@@ -1,3 +1,12 @@
+Vue.component("currencies-list", {
+  props: ["rate", "currency"],
+  template: `<div>
+    <ul>
+      <li><a id="currency" v-on:click="$emit('change-currency', currency)">{{currency}}:</a> {{rate}}</li>
+    </ul>
+  </div>`,
+});
+
 let app = new Vue({
   el: "#exchange",
   data: {
@@ -17,34 +26,37 @@ let app = new Vue({
       .then((res) => (this.currencies = res.data.rates))
       .catch((err) => console.log(err));
   },
-  mounted() {
-	
-  },
+  mounted() {},
   methods: {
     changeCurrency(currency) {
-	  this.exg = currency;
-	  this.updateRatings(currency);
-	},
-	updateRatings(currency) {
-		axios
-		.get(`https://api.exchangeratesapi.io/latest?base=${currency}`)
-		.then((res) => (this.currencies = res.data.rates))
-		.catch((err) => console.log(err));
-	},
-	calculateExhange(input) {
-		axios
-		.get(`https://api.exchangeratesapi.io/latest?base=${this.selectedFromCurrency}&symbols=${this.selectedToCurrency}`)
-		.then((res) => (this.rate = res.data.rates[this.selectedToCurrency]))
-		.catch((err) => console.log(err));
-		
-		this.outputAmount  = input * this.rate;		
-	},
-	// NOT DONE!
-	switchCurrencies() {
-		let temp = this.selectedFromCurrency;
+      this.exg = currency;
+      this.updateRatings(currency);
+    },
+    updateRatings(currency) {
+      axios
+        .get(`https://api.exchangeratesapi.io/latest?base=${currency}`)
+        .then((res) => (this.currencies = res.data.rates))
+        .catch((err) => console.log(err));
+    },
+    calculateExhange(input, fromCurrency, toCurrency) {
+      axios
+        .get(
+          `https://api.exchangeratesapi.io/latest?base=${fromCurrency}&symbols=${toCurrency}`
+        )
+        .then((res) => {
+          (this.rate = res.data.rates[toCurrency]),
+          this.outputAmount = this.inputAmount * this.rate;
+        } )
+        .catch((err) => console.log(err));
 
-		this.selectedFromCurrency = this.selectedToCurrency;
-		this.selectedToCurrency = temp;
-	}
+      
+    },
+    // NOT DONE!
+    switchCurrencies() {
+      let temp = this.selectedFromCurrency;
+
+      this.selectedFromCurrency = this.selectedToCurrency;
+      this.selectedToCurrency = temp;
+    },
   },
 });

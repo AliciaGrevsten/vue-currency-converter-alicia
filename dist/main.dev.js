@@ -1,5 +1,9 @@
 "use strict";
 
+Vue.component("currencies-list", {
+  props: ["rate", "currency"],
+  template: "<div>\n    <ul>\n      <li><a id=\"currency\" v-on:click=\"$emit('change-currency', currency)\">{{currency}}:</a> {{rate}}</li>\n    </ul>\n  </div>"
+});
 var app = new Vue({
   el: "#exchange",
   data: {
@@ -36,15 +40,14 @@ var app = new Vue({
         return console.log(err);
       });
     },
-    calculateExhange: function calculateExhange(input) {
+    calculateExhange: function calculateExhange(input, fromCurrency, toCurrency) {
       var _this3 = this;
 
-      axios.get("https://api.exchangeratesapi.io/latest?base=".concat(this.selectedFromCurrency, "&symbols=").concat(this.selectedToCurrency)).then(function (res) {
-        return _this3.rate = res.data.rates[_this3.selectedToCurrency];
+      axios.get("https://api.exchangeratesapi.io/latest?base=".concat(fromCurrency, "&symbols=").concat(toCurrency)).then(function (res) {
+        _this3.rate = res.data.rates[toCurrency], _this3.outputAmount = _this3.inputAmount * _this3.rate;
       })["catch"](function (err) {
         return console.log(err);
       });
-      this.outputAmount = input * this.rate;
     },
     // NOT DONE!
     switchCurrencies: function switchCurrencies() {
